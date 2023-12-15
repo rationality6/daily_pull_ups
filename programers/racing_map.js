@@ -19,42 +19,54 @@
 
 // 4등인 "kai" 선수가 2번 추월하여 2등이 되고 앞서 3등, 2등인 "poe", "soe" 선수는 4등, 3등이 됩니다. 5등인 "mine" 선수가 2번 추월하여 4등, 3등인 "poe", "soe" 선수가 5등, 4등이 되고 경주가 끝납니다. 1등부터 배열에 담으면 ["mumu", "kai", "mine", "soe", "poe"]이 됩니다.
 
-function toObjectByKey(arrays) {
-  let object = {};
-  arrays.forEach((item, index) => {
-    object[index] = item;
-  });
-  return object;
-}
+class RacingSolver {
+  constructor(players, callings) {
+    this.players = players;
+    this.callings = callings;
+  }
 
-function toObjectByValue(arrays) {
-  let object = {};
-  arrays.forEach((item, index) => {
-    object[item] = index;
-  });
-  return object;
+  toObjectByKey(arrays) {
+    let object = new Map();
+    arrays.forEach((item, index) => {
+      object[index] = item;
+    });
+    return object;
+  }
+
+  toObjectByValue(arrays) {
+    let object = new Map();
+    arrays.forEach((item, index) => {
+      object[item] = index;
+    });
+    return object;
+  }
+
+  perform() {
+    let playersObjectIndex = this.toObjectByKey(this.players);
+    let playersObjectCalling = this.toObjectByValue(this.players);
+
+    this.callings.forEach((calling) => {
+      const keyIndex = playersObjectCalling[calling];
+
+      const rightFrontPlayer = playersObjectIndex[keyIndex - 1];
+      const rightFrontPlayerIndex = playersObjectCalling[rightFrontPlayer];
+
+      playersObjectCalling[calling] = keyIndex - 1;
+      playersObjectCalling[rightFrontPlayer] = keyIndex;
+
+      playersObjectIndex[keyIndex] = rightFrontPlayer;
+      playersObjectIndex[rightFrontPlayerIndex] = calling;
+    });
+
+    const result = Object.values(playersObjectIndex);
+    return result;
+  }
 }
 
 function solution(players, callings) {
-  let callingsClone = [...callings];
-  let playersObjectIndex = toObjectByKey(players);
-  let playersObjectCalling = toObjectByValue(players);
+  const racingSolver = new RacingSolver(players, callings);
 
-  callingsClone.forEach((calling) => {
-    const keyIndex = playersObjectCalling[calling];
-
-    const rightFrontPlayer = playersObjectIndex[keyIndex - 1];
-    const rightFrontPlayerIndex = playersObjectCalling[rightFrontPlayer];
-
-    playersObjectCalling[calling] = keyIndex - 1;
-    playersObjectCalling[rightFrontPlayer] = keyIndex;
-
-    playersObjectIndex[keyIndex] = rightFrontPlayer;
-    playersObjectIndex[rightFrontPlayerIndex] = calling;
-  });
-
-  const result = Object.values(playersObjectIndex);
-  return result;
+  return racingSolver.perform();
 }
 
 console.log(
