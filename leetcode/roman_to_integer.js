@@ -16,17 +16,15 @@ const romanToInt = (s) => {
   let roman_array = s.split("");
   let result_counter = 0;
 
-  console.log(s)
-  // for (let i = roman_array.length - 1; i >= 0; i -= 1) {
-  //   if (4 * roman_table[roman_array[i]] < result_counter) {
-  //     result_counter -= roman_table[roman_array[i]];
-  //   } else {
-  //     result_counter += roman_table[roman_array[i]];
-  //   }
-  // }
+  for (let i = roman_array.length - 1; i >= 0; i -= 1) {
+    if (4 * roman_table[roman_array[i]] < result_counter) {
+      result_counter -= roman_table[roman_array[i]];
+    } else {
+      result_counter += roman_table[roman_array[i]];
+    }
+  }
 
   return result_counter;
 };
 
-
-romanToInt("III")
+console.log(romanToInt("III"));
