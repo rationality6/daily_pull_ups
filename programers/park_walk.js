@@ -76,10 +76,14 @@ function move(park, moveString) {
   let [currentLocationRowIndex, currentLocationColIndex] =
     getCurrentLocation(park);
 
+  let rollback = false
+  const parkSave = Object.assign({}, park);
+  
   [...Array(distance).keys()].forEach((d) => {
     switch (direction) {
       case "N":
         if(park[currentLocationRowIndex - 1][currentLocationColIndex] === undefined || park[currentLocationRowIndex - 1][currentLocationColIndex] === "X"){
+          rollback = true
           break;
         }
 
@@ -95,6 +99,7 @@ function move(park, moveString) {
           park[currentLocationRowIndex + 1][currentLocationColIndex] ===
           undefined || park[currentLocationRowIndex + 1][currentLocationColIndex] === "X"
         ) {
+          rollback = true
           break;
         }
 
@@ -112,6 +117,7 @@ function move(park, moveString) {
           undefined || park[currentLocationRowIndex][currentLocationColIndex - 1] ===
           "X"
         ) {
+          rollback = true
           break;
         }
 
@@ -133,6 +139,7 @@ function move(park, moveString) {
           undefined || park[currentLocationRowIndex][currentLocationColIndex + 1] ===
           "X"
         ) {
+          rollback = true
           break;
         }
 
@@ -151,7 +158,11 @@ function move(park, moveString) {
     }
   });
 
-  console.log(park);
+  // rollback
+  if(rollback == true){
+    park = parkSave
+  }
+
 }
 
 function solution(park, routes) {
@@ -166,6 +177,7 @@ function solution(park, routes) {
   return answer;
 }
 
-const solutionResult = solution(["SOO", "OOO", "OOO"], ["E 2", "S 2", "W 1"]);
+// const solutionResult = solution(["SOO", "OOO", "OOO"], ["E 2", "S 2", "W 1"]);
+const solutionResult = solution(["OSO", "OOO", "OXO", "OOO"], ["E 2", "S 3", "W 1"]);
 console.log(solutionResult);
-console.log(JSON.stringify(solutionResult) == JSON.stringify([2, 1]));
+console.log(JSON.stringify(solutionResult) == JSON.stringify([0, 0]));
