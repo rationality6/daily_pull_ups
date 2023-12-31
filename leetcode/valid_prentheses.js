@@ -35,7 +35,7 @@
  */
 var isValid = function (str) {
   // let isStringValid = true;
-  let queueArray = [];
+  let stackArray = [];
   const splitedStr = str.split("");
 
   const matchHash = {
@@ -45,21 +45,21 @@ var isValid = function (str) {
   };
 
   splitedStr.forEach((i) => {
-    if (queueArray.length === 0) {
-      queueArray.push(i);
+    if (stackArray.length === 0) {
+      stackArray.push(i);
     } else {
-      const shouldMatchSymbol = matchHash[queueArray[queueArray.length - 1]];
+      const shouldMatchSymbol = matchHash[stackArray[stackArray.length - 1]];
       if (shouldMatchSymbol === i) {
-        queueArray.pop();
+        stackArray.pop();
       } else {
-        queueArray.push(i)
+        stackArray.push(i)
       }
     }
   });
 
-  console.log(queueArray)
+  console.log(stackArray)
 
-  if (queueArray.length === 0) {
+  if (stackArray.length === 0) {
     return true
   } else {
     return false
