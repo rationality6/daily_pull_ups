@@ -73,11 +73,11 @@ console.log(listNode2);
 
 const result = mergeTwoLists(listNode1, listNode2)
 
-function resultRecur(result){
-  console.log(result.val)
+// function resultRecur(result){
+//   console.log(result.val)
 
-  if(result.next == null) return
-  resultRecur(result.next)
-}
+//   if(result.next == null) return
+//   resultRecur(result.next)
+// }
 
-resultRecur(result)
+// resultRecur(result)
