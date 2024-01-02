@@ -38,10 +38,46 @@ function ListNode(val, next) {
   this.next = next === undefined ? null : next;
 }
 
+function listnodefyLoop(array, ramainLength, arrayIndex) {
+  if (ramainLength == 0) return;
+  return new ListNode(
+    array[arrayIndex],
+    listnodefyLoop(array, ramainLength - 1, arrayIndex + 1)
+  );
+}
+
+function listnodefy(array) {
+  if (array.length == 0) return;
+  let arrayRemainLength = array.length;
+  let arrayIndex = 0;
+
+  return listnodefyLoop(array, arrayRemainLength, arrayIndex);
+}
+
 var mergeTwoLists = function (list1, list2) {
   if (!list1 || !list2) return list1 || list2;
+
   if (list1.val < list2.val) {
     return new ListNode(list1.val, mergeTwoLists(list1.next, list2));
   }
   return new ListNode(list2.val, mergeTwoLists(list1, list2.next));
 };
+
+const list1 = [1, 2, 4];
+const listNode1 = listnodefy(list1);
+console.log(listNode1);
+
+const list2 = [1, 3, 4];
+const listNode2 = listnodefy(list2);
+console.log(listNode2);
+
+const result = mergeTwoLists(listNode1, listNode2)
+
+function resultRecur(result){
+  console.log(result.val)
+
+  if(result.next == null) return
+  resultRecur(result.next)
+}
+
+resultRecur(result)
