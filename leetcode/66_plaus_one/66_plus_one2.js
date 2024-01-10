@@ -45,7 +45,12 @@ var plusOne = function (digits) {
   digits.every((i, index) => {
     const addOne = (i += 1);
     if (9 < addOne) {
-      digits[index] = addOne;
+      digits[index] = 0;
+
+      if (digits.length - 1 == index) {
+        digits.push(1);
+      }
+
       return true;
     } else {
       digits[index] = addOne;
@@ -53,10 +58,10 @@ var plusOne = function (digits) {
     }
   });
 
-  return digits;
+  return digits.reverse();
 };
 
-console.log(plusOne([1, 2, 3]));
+// console.log(plusOne([1, 2, 3]));
 // console.log(plusOne([9]));
 // console.log(plusOne([9, 9]));
 // console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3]));
